@@ -28,7 +28,45 @@ public class BinarySearchTreeWithDups<T extends Comparable<? super T>> extends B
 	// ??? IMPLEMENT THIS METHOD
 	private T addEntryHelperIterative(T newEntry) {
 		// IMPORTANT: METHOD MUST BE ITERATIVE!!
-		return null;
+		// IMPORTANT: METHOD MUST BE ITERATIVE!!
+		BinaryNodeInterface<T> currentNode = getRootNode();
+		assert currentNode != null;
+		T result = null;
+		boolean found = false;
+		
+		while (!found) {
+			T currentEntry = currentNode.getData();
+			int comparison = newEntry.compareTo(currentEntry);
+
+			if (comparison == 0) {
+				//newEntry matches currentEntry
+				//go into right subtree and add as normal
+				//for BST
+				if (currentNode.hasRightChild())
+					currentNode = currentNode.getRightChild();
+					continue;
+				
+			}else if (comparison < 0) {
+				if (currentNode.hasLeftChild())
+					currentNode = currentNode.getLeftChild();
+				else {
+					found = true;
+					currentNode.setLeftChild(new BinaryNode<T>(newEntry));
+				} // end if
+			} else {
+				assert comparison > 0;
+
+				if (currentNode.hasRightChild())
+					currentNode = currentNode.getRightChild();
+				else {
+					found = true;
+					currentNode.setRightChild(new BinaryNode<T>(newEntry));
+				}
+			}
+		}
+
+		return result;
+		
 	}
 	
 	// ??? IMPLEMENT THIS METHOD
