@@ -71,15 +71,33 @@ public class BinarySearchTreeWithDups<T extends Comparable<? super T>> extends B
 	
 	// ??? IMPLEMENT THIS METHOD
 	public ArrayList<T> getAllEntriesIterative(T searchVal) {
-		// this initial code is meant as a suggestion to get your started- feel
-		// free to use it or delete it!
+		public ArrayList<T> getAllEntriesLessThanIterative(T searchVal) {
+		StackInterface<BinaryNodeInterface<T>> nodeStack = new LinkedStack<>();
 		BinaryNodeInterface<T> currentNode = getRootNode();
 		ArrayList<T> entryList = new ArrayList<T>();
-
-		// while(currentNode!=null) {
-		// }
 		
+		while (!nodeStack.isEmpty() || (currentNode != null)) {
+			while (currentNode != null) {
+				nodeStack.push(currentNode);
+				currentNode = currentNode.getLeftChild();
+			}
+			if (!nodeStack.isEmpty()) {
+				BinaryNodeInterface<T> nextNode = nodeStack.pop();
+				assert nextNode != null;
+				T currentEntry = nextNode.getData();
+				int comparison = searchVal.compareTo(currentEntry);
+				if (comparison > 0) {
+					entryList.add(nextNode.getData());
+					}
+				currentNode = nextNode.getRightChild();
+			} // end if
+
+		} // end while
+
 		return entryList;
+
+	
+
 	}
 
 	// ??? IMPLEMENT THIS METHOD
